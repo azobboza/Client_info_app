@@ -4,7 +4,8 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 var app = angular.module('Client_info', ['ionic',
-                                        'Client_info.controllers.login'])
+                                        'Client_info.controllers.login',
+                                        'Client_info.services.login'])
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -40,3 +41,12 @@ app.config(function($stateProvider, $urlRouterProvider){
     $urlRouterProvider.otherwise('/login');
     
 });
+
+//app.config(['$httpProvider', function($httpProvider) {
+//        $httpProvider.defaults.useXDomain = true;
+//        $httpProvider.defaults.withCredentials = true;
+//        delete $httpProvider.defaults.headers.common["X-Requested-With"];
+//        $httpProvider.defaults.headers.common["Accept"] = "application/json";
+//        $httpProvider.defaults.headers.common["Content-Type"] = "application/json";
+//    }
+//]);
