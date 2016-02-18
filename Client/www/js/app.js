@@ -6,7 +6,8 @@
 var app = angular.module('Client_info', ['ionic',
                                          'ngMessages',
                                         'Client_info.controllers.login',
-                                        'Client_info.services.login'])
+                                        'Client_info.controllers.signup',
+                                        'Client_info.services.auth'])
 
 app.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -36,7 +37,8 @@ app.config(function($stateProvider, $urlRouterProvider){
     })
     .state('signup', {
         url: '/signup',
-        templateUrl: 'templates/signup.html'
+        templateUrl: 'templates/signup.html',
+        controller: 'SignUpCtrl'
     })
     
     $urlRouterProvider.otherwise('/login');

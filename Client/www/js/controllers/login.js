@@ -1,21 +1,21 @@
 var app = angular.module('Client_info.controllers.login', []);
 
-app.controller('LoginCtrl',['$scope', 'LoginServices', function($scope, LoginServices){
+app.controller('LoginCtrl',['$scope', 'AuthServices', function($scope, AuthServices){
     
     
     //OVO RADIIIII
     //zasto ovo mora da stoji ovde?!?!?!?
-    $scope.formData = {};   
+    $scope.authorization = {};   
     
-    $scope.login = function(form){
+    $scope.signIn = function(form){
         console.log('LoginCtrl');
-        if(form.$valid){
-            console.log('valid form');
-        }else{
-            console.log('invalid form');
-        }
+//        if(form.$valid){
+//            console.log('valid form');
+//        }else{
+//            console.log('invalid form');
+//        }
         
         
-        //LoginServices.login($scope.formData);
+        AuthServices.login($scope.formData);
     };
 }]);
