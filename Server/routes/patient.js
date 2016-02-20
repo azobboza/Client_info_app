@@ -4,10 +4,7 @@ var mongoose = require('mongoose');
 var Patient = require('../models/patient');
 
 var config = require('../config/database');
-//var passport = require('passport');
-//
-//passport.initialize()
-//require('../config/passport')(passport);
+
 
 //all patient ever
 router.get('/', function(req, res, next){
@@ -23,7 +20,10 @@ router.get('/', function(req, res, next){
 router.get('/user/:userId', function(req, res, next){
     Patient.find({userId: req.params.userId}, function(err, patient){
         if(err){
-            res.send(err);
+            res.json({
+                        "status": 401,
+                        "message": "Patient don't exists for this user!"
+                    });
         }else{
             res.json(patient);
         }

@@ -23,7 +23,7 @@ router.post('/registration', function(req, res, next) {
         
   newUser.save(function(err){
       if(err){
-          res.send('User already existes');
+          res.send(err);
       }else{
           res.send('Successfuly added user!');
       }
@@ -35,26 +35,59 @@ router.post('/login', function(req, res, next) {
   User.findOne({email: req.body.email}, function(err, user){
 
             if(err){
-                res.send({success: false, msg: 'err.'});
+                res.status(401);
+                res.json({
+                    "status": 401,
+                    "message": "err"
+                });
+                return;
             }
         
             if(!user){
-                res.send({success: false, msg: 'Authentication failed. User not found.'});
+                res.status(401);
+                res.json({
+                    "status": 401,
+                    "message": "Invalid credentials"
+                });
+                return;
             }
             
             //given username and password matches a database document
             user.comparePassword(req.body.password, function(err, isMatch){
                 
                 if (isMatch && !err) {
-                    var token = jwt.encode(user, config.secret);
-                    console.log(token);
-                    res.json({success: true, token: 'JWT ' + token});
+                    res.json(genToken(user));
                 } else {
-                    res.send({success: false, msg: 'Authentication failed. Wrong password.'});
+                    //res.json({success: false, msg: 'Authentication failed. Wrong password.'});
+                    res.status(401);
+                    res.json({
+                        "status": 401,
+                        "message": "Authentication failed. Wrong password."
+                    });
                 }
                 
             });
         });
 });
+
+
+function genToken(user) {
+  var expires = expiresIn(7); // 7 days
+  var token = jwt.encode({
+    exp: expires
+  }, config.secret);
+ 
+  return {
+    token: 'JWT ' + token,
+    expires: expires,
+    user: user
+  };
+}
+
+//token expires in 7 days
+function expiresIn(numDays){
+    var dateObj = new Date();
+    return dateObj.setDate(dateObj.getDate() + numDays);
+}
 
 module.exports = router;
