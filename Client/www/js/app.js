@@ -30,8 +30,10 @@ app.run(function($ionicPlatform) {
   });
 })
 
-app.config(function($stateProvider, $urlRouterProvider){
+app.config(function($stateProvider, $urlRouterProvider, $httpProvider){
    
+    $httpProvider.interceptors.push('TokenInterceptor');
+    
     $stateProvider
     .state('login', {
         url: '/login',

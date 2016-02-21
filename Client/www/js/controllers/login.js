@@ -12,7 +12,7 @@ app.controller('LoginCtrl',['$scope', 'AuthServices', 'AuthFactory', '$state', f
         if(form.$valid){
             console.log('valid form');
             AuthServices.login($scope.authorization).success(function(data){
-                console.log(data);
+                //console.log(data);
                 AuthFactory.setUser(data.user);
                 AuthFactory.setToken({
                     token: data.token,
